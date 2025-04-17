@@ -36,3 +36,8 @@ final class AllLaunchesEmpty extends AllLaunchesState {
   @override
   List<Object?> get props => [];
 }
+
+final class NavigateToSingleLaunchScreenState extends AllLaunchesState {
+  @override
+  List<Object?> get props => [];
+}

@@ -22,7 +22,12 @@ class _AllLauncehesScreenState extends State<AllLauncehesScreen> {
     return BlocProvider(
       create: (context) =>
           AllLaunchesBloc(getIt<LaunchesRepository>())..add(FetchAllLaunches()),
-      child: BlocBuilder<AllLaunchesBloc, AllLaunchesState>(
+      child: BlocConsumer<AllLaunchesBloc, AllLaunchesState>(
+        listener: (context, state) {
+          if (state is NavigateToSingleLaunchScreenState) {
+            print('object');
+          }
+        },
         builder: (context, state) {
           if (state is AllLaunchesLoading) {
             return const LottieView(

@@ -1,5 +1,6 @@
 import 'package:arch_tech_task/launch_model/launch_model.dart';
 import 'package:arch_tech_task/launches_repository/launches_repository.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,8 +16,7 @@ class AllLaunchesBloc extends Bloc<AllLaunchesEvent, AllLaunchesState> {
   }
 
   void _onCardTapped(CardTapped event, Emitter<AllLaunchesState> emit) {
-    // Handle card tapped event
-    // You can navigate to a new screen or perform any other action here
+    emit(NavigateToSingleLaunchScreenState());
   }
 
   Future<void> _onFetchAllLaunches(
