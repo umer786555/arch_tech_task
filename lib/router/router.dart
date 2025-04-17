@@ -1,4 +1,3 @@
-
 import 'package:arch_tech_task/router/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 
