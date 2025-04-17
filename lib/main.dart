@@ -3,7 +3,7 @@ import 'package:arch_tech_task/service_locator/service_locator.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-    WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
   setup();
   runApp(App());

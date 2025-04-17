@@ -24,13 +24,21 @@ class SingleLaunchScreen extends StatelessWidget {
       child: BlocConsumer<SingleLaunchBloc, SingleLaunchState>(
         listener: (context, state) {},
         builder: (context, state) {
+                   return ErrorView(
+              errorMessage: 'Something went wrong try again.',
+              onRetry: () {
+                context
+                    .read<SingleLaunchBloc>()
+                    .add(FetchSingleLaunch(flightNumber: flightNumber));
+              },
+            );
           if (state is SingleLaunchLoading) {
             return const LottieView(
                 lottieToShow: 'assets/rocket_launching.json',
                 message: 'Loading...');
           }
           if (state is SingleLaunchError) {
-            return ErrorUi(
+            return ErrorView(
               errorMessage: 'Something went wrong try again.',
               onRetry: () {
                 context
@@ -45,7 +53,7 @@ class SingleLaunchScreen extends StatelessWidget {
               appBar: AppBar(
                 iconTheme: const IconThemeData(color: Colors.white),
                 title: const Text(
-                  'Single Launch',
+                  'Launch Details',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24,
@@ -56,78 +64,83 @@ class SingleLaunchScreen extends StatelessWidget {
               ),
               backgroundColor: Colors.black,
               body: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: CachedImageWidget(
-                          imageUrl:
-                              state.launch.links.mission_patch_small ?? '',
-                          size: 250,
-                        )),
-                    Text(
-                      state.launch.mission_name ?? '',
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Flight #${state.launch.flight_number}',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Mission Result: ',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: CachedImageWidget(
+                              imageUrl:
+                                  state.launch.links.mission_patch_small ?? '',
+                              size: 250,
+                            )),
+                        Text(
+                          state.launch.mission_name ?? '',
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Flight #${state.launch.flight_number}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
-                          Text(
-                            state.launch.launch_success == true
-                                ? 'Success'
-                                : 'Failed',
+                        ),
+                        const SizedBox(height: 4),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                'Mission Result: ',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 19,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Text(
+                                state.launch.launch_success == true
+                                    ? 'Success'
+                                    : 'Failed',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            state.launch.details ?? '',
+                            textAlign: TextAlign.center,
                             style: const TextStyle(
                               color: Colors.white,
-                              fontSize: 16,
+                              fontSize: 18,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        state.launch.details ?? '',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
                         ),
-                      ),
+                        const SizedBox(height: 8),
+                        Visibility(
+                          visible: state.launch.links.youtube_id != null,
+                          child: Bounceable(
+                            onTap: () => context.router.push(VideoPlayerRoute(
+                                videoId: state.launch.links.youtube_id!)),
+                            child: const Icon(Icons.play_circle_fill,
+                                color: Colors.red, size: 100),
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 8),
-                    Visibility(
-                      visible: state.launch.links.youtube_id != null,
-                      child: Bounceable(
-                        onTap: () => context.router.push(VideoPlayerRoute(
-                            videoId: state.launch.links.youtube_id!)),
-                        child: const Icon(Icons.play_circle_fill,
-                            color: Colors.red, size: 100),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             );

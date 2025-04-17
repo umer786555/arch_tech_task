@@ -24,9 +24,7 @@ class _AllLauncehesScreenState extends State<AllLauncehesScreen> {
       create: (context) =>
           AllLaunchesBloc(getIt<LaunchesRepository>())..add(FetchAllLaunches()),
       child: BlocConsumer<AllLaunchesBloc, AllLaunchesState>(
-        listener: (context, state) {
-      
-        },
+        listener: (context, state) {},
         builder: (context, state) {
           if (state is AllLaunchesLoading) {
             return const LottieView(
@@ -64,7 +62,7 @@ class _AllLauncehesScreenState extends State<AllLauncehesScreen> {
               ),
             );
           } else {
-            return ErrorUi(
+            return ErrorView(
               errorMessage: 'Something went wrong try again.',
               onRetry: () {
                 context.read<AllLaunchesBloc>().add(FetchAllLaunches());
