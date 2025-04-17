@@ -10,14 +10,25 @@ class AllLaunchesBloc extends Bloc<AllLaunchesEvent, AllLaunchesState> {
   final LaunchesRepository launchesRepository;
 
   AllLaunchesBloc(this.launchesRepository) : super(AllLaunchesInitial()) {
-    on<FetchAllLaunches>((event, emit) async {
-      emit(AllLaunchesLoading());
-      try {
-        final getAllLaunches = await launchesRepository.getAllLaunches();
-        emit(AllLaunchesLoaded(launches: getAllLaunches));
-      } catch (e) {
-        emit(AllLaunchesError(message: e.toString()));
-      }
-    });
+    on<FetchAllLaunches>(_onFetchAllLaunches);
+    on<CardTapped>(_onCardTapped);
+  }
+
+  void _onCardTapped(CardTapped event, Emitter<AllLaunchesState> emit) {
+    // Handle card tapped event
+    // You can navigate to a new screen or perform any other action here
+  }
+
+  Future<void> _onFetchAllLaunches(
+    FetchAllLaunches event,
+    Emitter<AllLaunchesState> emit,
+  ) async {
+    emit(AllLaunchesLoading());
+    try {
+      final getAllLaunches = await launchesRepository.getAllLaunches();
+      emit(AllLaunchesLoaded(launches: getAllLaunches));
+    } catch (e) {
+      emit(AllLaunchesError(message: e.toString()));
+    }
   }
 }
