@@ -24,4 +24,21 @@ class LaunchesRepository {
       throw Exception('Failed to load launches: $e');
     }
   }
+
+  Future<LaunchModel> getLauncheByFlightNumber(String flightNumber) async {
+    try {
+      final response =
+          await dataService.get('${Endpoints.baseUrl}/launches/$flightNumber');
+      if (response.statusCode == 200) {
+        final dynamic decodedJson = jsonDecode(response.body);
+        final LaunchModel launches =
+            decodedJson.map((json) => LaunchModel.fromJson(json));
+        return launches;
+      } else {
+        throw Exception('Failed to load launches');
+      }
+    } catch (e) {
+      throw Exception('Failed to load launches: $e');
+    }
+  }
 }
