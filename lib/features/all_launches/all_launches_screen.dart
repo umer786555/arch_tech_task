@@ -50,15 +50,16 @@ class _AllLauncehesScreenState extends State<AllLauncehesScreen> {
                     itemCount: state.launches.length,
                     itemBuilder: (BuildContext context, int index) {
                       final launch = state.launches[index];
-                      return LaunchCard(launch: launch, onChevronTapped: () {
-
-                        context.read<AllLaunchesBloc>().add(CardTapped(flightNumber: launch.flight_number.toString()));
-                      });
+                      return LaunchCard(
+                          launch: launch,
+                          onChevronTapped: () {
+                            context.read<AllLaunchesBloc>().add(CardTapped(
+                                flightNumber: launch.flight_number.toString()));
+                          });
                     }),
               ),
             );
-          }
-          else {
+          } else {
             return ErrorUi(
               errorMessage: 'Something went wrong try again.',
               onRetry: () {
@@ -66,7 +67,6 @@ class _AllLauncehesScreenState extends State<AllLauncehesScreen> {
               },
             );
           }
-          
         },
       ),
     );
