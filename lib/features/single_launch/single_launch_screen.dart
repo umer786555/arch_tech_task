@@ -21,17 +21,8 @@ class SingleLaunchScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => SingleLaunchBloc(getIt<LaunchesRepository>())
         ..add(FetchSingleLaunch(flightNumber: flightNumber)),
-      child: BlocConsumer<SingleLaunchBloc, SingleLaunchState>(
-        listener: (context, state) {},
+      child: BlocBuilder<SingleLaunchBloc, SingleLaunchState>(
         builder: (context, state) {
-                   return ErrorView(
-              errorMessage: 'Something went wrong try again.',
-              onRetry: () {
-                context
-                    .read<SingleLaunchBloc>()
-                    .add(FetchSingleLaunch(flightNumber: flightNumber));
-              },
-            );
           if (state is SingleLaunchLoading) {
             return const LottieView(
                 lottieToShow: 'assets/rocket_launching.json',

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bounceable/flutter_bounceable.dart';
 
 class ErrorView extends StatelessWidget {
   const ErrorView({super.key, required this.errorMessage, this.onRetry});
