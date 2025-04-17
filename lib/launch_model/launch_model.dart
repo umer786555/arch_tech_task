@@ -11,12 +11,14 @@ class LaunchModel {
   final String? launch_year;
   final bool? launch_success;
   final Links links;
+  final String? details;
   LaunchModel(
       {required this.flight_number,
       required this.mission_name,
       required this.launch_year,
       required this.launch_success,
-      required this.links});
+      required this.links,
+      required this.details});
 
   factory LaunchModel.fromJson(Map<String, dynamic> json) =>
       _$LaunchModelFromJson(json);

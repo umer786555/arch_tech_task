@@ -12,11 +12,6 @@ class AllLaunchesBloc extends Bloc<AllLaunchesEvent, AllLaunchesState> {
 
   AllLaunchesBloc(this.launchesRepository) : super(AllLaunchesInitial()) {
     on<FetchAllLaunches>(_onFetchAllLaunches);
-    on<CardTapped>(_onCardTapped);
-  }
-
-  void _onCardTapped(CardTapped event, Emitter<AllLaunchesState> emit) {
-    emit(NavigateToSingleLaunchScreenState());
   }
 
   Future<void> _onFetchAllLaunches(

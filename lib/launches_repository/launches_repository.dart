@@ -29,16 +29,17 @@ class LaunchesRepository {
     try {
       final response =
           await dataService.get('${Endpoints.baseUrl}/launches/$flightNumber');
+
       if (response.statusCode == 200) {
-        final dynamic decodedJson = jsonDecode(response.body);
-        final LaunchModel launches =
-            decodedJson.map((json) => LaunchModel.fromJson(json));
-        return launches;
+        final Map<String, dynamic> decodedJson = jsonDecode(response.body);
+
+        final LaunchModel launch = LaunchModel.fromJson(decodedJson);
+        return launch;
       } else {
-        throw Exception('Failed to load launches');
+        throw Exception('Failed to load launch: Status ${response.statusCode}');
       }
     } catch (e) {
-      throw Exception('Failed to load launches: $e');
+      throw Exception('Failed to load launch: $e');
     }
   }
 }

@@ -5,7 +5,6 @@ sealed class AllLaunchesState extends Equatable {}
 
 final class AllLaunchesInitial extends AllLaunchesState {
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 }
 
@@ -16,11 +15,29 @@ final class AllLaunchesLoading extends AllLaunchesState {
 
 final class AllLaunchesLoaded extends AllLaunchesState {
   final List<LaunchModel> launches;
+  final String? selectedFlightNumber;
+  final bool navigate;
 
-  AllLaunchesLoaded({required this.launches});
+  AllLaunchesLoaded({
+    required this.launches,
+    this.selectedFlightNumber,
+    this.navigate = false,
+  });
+
+  AllLaunchesLoaded copyWith({
+    List<LaunchModel>? launches,
+    String? selectedFlightNumber,
+    bool? navigate,
+  }) {
+    return AllLaunchesLoaded(
+      launches: launches ?? this.launches,
+      selectedFlightNumber: selectedFlightNumber ?? this.selectedFlightNumber,
+      navigate: navigate ?? this.navigate,
+    );
+  }
 
   @override
-  List<Object?> get props => [launches];
+  List<Object?> get props => [launches, selectedFlightNumber, navigate];
 }
 
 final class AllLaunchesError extends AllLaunchesState {
@@ -37,7 +54,3 @@ final class AllLaunchesEmpty extends AllLaunchesState {
   List<Object?> get props => [];
 }
 
-final class NavigateToSingleLaunchScreenState extends AllLaunchesState {
-  @override
-  List<Object?> get props => [];
-}

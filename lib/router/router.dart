@@ -6,5 +6,7 @@ class AppRouter extends $AppRouter {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(page: AllLauncehesRoute.page, initial: true),
+        AutoRoute(page: SingleLaunchRoute.page),
+        AutoRoute(page: VideoPlayerRoute.page),
       ];
 }

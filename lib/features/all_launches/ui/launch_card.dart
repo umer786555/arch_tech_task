@@ -31,9 +31,9 @@ class LaunchCard extends StatelessWidget {
                     ),
                   ),
                   child: CachedImageWidget(
-                      imageUrl: launch.links.mission_patch_small ?? '',
-                      width: 80,
-                      height: 80)),
+                    imageUrl: launch.links.mission_patch_small ?? '',
+                    size: 80,
+                  )),
               const SizedBox(width: 8),
               Expanded(
                 child: Column(
@@ -101,27 +101,39 @@ class LaunchCard extends StatelessWidget {
 }
 
 class CachedImageWidget extends StatelessWidget {
-  final String imageUrl;
-  final double width;
-  final double height;
+  final String? imageUrl;
+  final double size;
 
-  const CachedImageWidget(
-      {super.key,
-      required this.imageUrl,
-      required this.width,
-      required this.height});
+  const CachedImageWidget({
+    super.key,
+    required this.imageUrl,
+    this.size = 60.0,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return ClipOval(
-      child: CachedNetworkImage(
-        width: width,
-        height: height,
-        fit: BoxFit.cover,
-        imageUrl: imageUrl,
-        placeholder: (context, url) => _shimmerPlaceholder(),
-        errorWidget: (context, url, error) =>
-            const Icon(Icons.rocket, size: 40),
+    final bool isValidUrl = imageUrl != null;
+
+    return Container(
+      width: size,
+      height: size,
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.blueGrey, width: 1),
+      ),
+      child: ClipOval(
+        child: isValidUrl
+            ? CachedNetworkImage(
+                width: size,
+                height: size,
+                fit: BoxFit.cover,
+                imageUrl: imageUrl!,
+                placeholder: (context, url) => _shimmerPlaceholder(),
+                errorWidget: (context, url, error) =>
+                    const Icon(Icons.rocket, size: 40),
+              )
+            : const Icon(Icons.rocket, size: 60),
       ),
     );
   }
@@ -131,8 +143,8 @@ class CachedImageWidget extends StatelessWidget {
       baseColor: Colors.grey[300]!,
       highlightColor: Colors.grey[100]!,
       child: Container(
-        width: width,
-        height: height,
+        width: size,
+        height: size,
         decoration: const BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.white,

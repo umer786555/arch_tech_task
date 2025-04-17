@@ -3,6 +3,7 @@ import 'package:arch_tech_task/common_utilities/lottie_view.dart';
 import 'package:arch_tech_task/features/all_launches/bloc/all_launches_bloc.dart';
 import 'package:arch_tech_task/features/all_launches/ui/launch_card.dart';
 import 'package:arch_tech_task/launches_repository/launches_repository.dart';
+import 'package:arch_tech_task/router/router.gr.dart';
 import 'package:arch_tech_task/service_locator/service_locator.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +25,7 @@ class _AllLauncehesScreenState extends State<AllLauncehesScreen> {
           AllLaunchesBloc(getIt<LaunchesRepository>())..add(FetchAllLaunches()),
       child: BlocConsumer<AllLaunchesBloc, AllLaunchesState>(
         listener: (context, state) {
-          if (state is NavigateToSingleLaunchScreenState) {
-            print('object');
-          }
+      
         },
         builder: (context, state) {
           if (state is AllLaunchesLoading) {
@@ -58,7 +57,7 @@ class _AllLauncehesScreenState extends State<AllLauncehesScreen> {
                       return LaunchCard(
                           launch: launch,
                           onChevronTapped: () {
-                            context.read<AllLaunchesBloc>().add(CardTapped(
+                            context.router.push(SingleLaunchRoute(
                                 flightNumber: launch.flight_number.toString()));
                           });
                     }),
