@@ -8,7 +8,8 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:arch_tech_task/all_launcehes_screen.dart' as _i1;
+import 'package:arch_tech_task/router/features/all_launch/all_launcehes_screen.dart'
+    as _i1;
 import 'package:auto_route/auto_route.dart' as _i2;
 
 abstract class $AppRouter extends _i2.RootStackRouter {

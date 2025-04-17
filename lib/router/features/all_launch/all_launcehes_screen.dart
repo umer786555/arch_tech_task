@@ -8,11 +8,17 @@ class AllLauncehesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.yellow,
       appBar: AppBar(
         title: const Text('All Launches'),
       ),
       body: const Center(
-        child: Text('All Launches Screen'),
+        child: Text('All Launches Screen', 
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            )),
       ),
     );
   }
